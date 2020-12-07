@@ -19,7 +19,7 @@ export const AnimalCarousel = ({ imageData }:any) => {
             return (
               <img
                 className="image"
-                key={id}
+                key={i}
                 src={imgSrc}
                 height="100"
                 alt={name}

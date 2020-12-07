@@ -1,24 +1,33 @@
+body{
+  background-color: rgb(226, 221, 221);
+}
+
 .header {
   color:blueviolet;
   font-weight: 50px;
   font-size: 100px;
 }
-
-
-.image{
-  margin: 10px 10px;
+.atctiveImage__wrapper {
+  height: 200px;
+  align-content: center;
 }
 
+.activeText{
+  display: inline-block;
+  background-color: grey;
+  padding:0px 10px;
+  height:100%;
+  width: 150px;
+  align-items: center;
+}
+.activeImage{
+  background-color: grey;
+  height:100%;
+}
 
-
-.label {
-  display: flex;
-  width: 100%;
-  font-size: 12px;
-  line-height: 1,5;
-  margin-bottom: 2px;
-  color: #555770;
-  font-weight: 500;
+.image{
+  align-self: center;
+  margin: 10px 10px;
 }
 
 .margin--top--25 {

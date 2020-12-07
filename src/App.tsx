@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "flexboxgrid";
 import { AnimalCarousel } from "./components/AnimalCarousel/AnimalCarousel";
 import "./App.css";
@@ -7,21 +7,28 @@ import { Checkbox } from "./components/Checkbox/Checkbox";
 
 function App() {
 
-  const [activeAnimals, setActiveAnimals]=useState([...animals])
-   
- 
-  const clickHandler = (value:any) => { 
-      const newAnimals=[...activeAnimals];
-      const currentAnimal=(activeAnimals).indexOf(value);
-      console.log(newAnimals)
-      console.log(currentAnimal)
+  const [allAnimals] = useState([...animals])
+  const [filteredAnimals, setfilteredAnimals] = useState([...allAnimals])
 
-      if (currentAnimal===-1) {
-        newAnimals.push(value)
-      }else{
-        newAnimals.splice(currentAnimal,1)
-      }
-      setActiveAnimals(newAnimals)
+
+
+
+
+  const clickHandler = (value: any) => {
+    const newFilteredAnimals = [...filteredAnimals];
+    const newAllAnimals = [...allAnimals];
+    
+    let currentSpecies = newFilteredAnimals.map(item => item.species)
+    
+    if (currentSpecies.indexOf(value) < 0) {
+      currentSpecies = [...currentSpecies,...[value]]
+    }else{
+      currentSpecies = currentSpecies.filter(item => item !== value).map(item => item)
+    }   
+
+    let onlyCheckedAnimals = newAllAnimals.filter(item => (currentSpecies).includes(item.species));
+
+    setfilteredAnimals(onlyCheckedAnimals)
   };
 
   return (
@@ -32,16 +39,26 @@ function App() {
         </div>
       </div>
       <div className="row center-xs">
-        {activeAnimals.map((item) => {
+        {allAnimals.map((item, i) => {
           return (
-            <div key={item.id}>
-              <Checkbox checkboxData={item} onChange={() => clickHandler(item.species)} />
+            <div key={i}>
+              <Checkbox
+                species={item.species}
+                onFilterClick={() => clickHandler(item.species)}
+              />
             </div>
           );
         })}
+
       </div>
-      <div className="row">
-        <AnimalCarousel imageData={activeAnimals} />
+      <div className="row center-xs margin--top--25">
+        {filteredAnimals.length === 0 ? (
+          <div>
+            <b>Nav izvēlēts neviens dzīvnieks!</b>
+          </div>
+        ) : (
+            <AnimalCarousel imageData={filteredAnimals} />
+          )}
       </div>
     </div>
   );

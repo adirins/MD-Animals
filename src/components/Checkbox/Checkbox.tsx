@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 
-export const Checkbox = ({ id, species }:any) => {
+type Props = {
+  species: string;
+  onFilterClick: () => void;
+};
 
+export const Checkbox = ({ species, onFilterClick }: Props) => {
 
-  const [checkedData, setChecedkData] = useState(true);
+const [checkedData, setChecedkData] = useState(true);
 
   return (
-    <div className="col-xs-4" key={id}>
-      <input
-        type="checkbox"
-        id={id}
-        checked={checkedData}
-        onChange={() => setChecedkData(!checkedData)}
-      ></input>      
-        <label className="label" htmlFor={id}>
-          zvērs: {species}
-        </label>         
+    <div>
+      <label >
+        <input
+          type="checkbox"
+          checked={checkedData}
+          onChange={() => {
+            setChecedkData(!checkedData);
+            onFilterClick();
+          }}
+        />
+        {species}
+      </label>
     </div>
   );
 };

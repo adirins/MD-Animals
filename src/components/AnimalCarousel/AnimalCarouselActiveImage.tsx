@@ -1,22 +1,25 @@
 import React, { useState } from "react";
 
-export const AnimalCarouselActiveImage = ({ imgSrc, name, discription, id }:any ) => {
+export const AnimalCarouselActiveImage = ({ imgSrc, name, discription, id }: any) => {
+
   const [showName, setShowName] = useState(false);
 
   return (
-    <div className="col-xs-6" style={{ height: 200 }}>
+    <div className="col-xs-4" style={{ height: 200 }} onClick={() => setShowName(!showName)}>
       {!showName ? (
+        <div className="atctiveImage__wrapper"> 
         <img
+          className="activeImage"
           alt={name}
           key={id}
           src={imgSrc}
-          height="200"
-          onClick={() => setShowName(true)}
+          onClick={() => setShowName(!showName)}
         ></img>
+        </div>
       ) : (
-          <div key={id}>
-            <h1 onClick={() => setShowName(false)}>{name}</h1>
-            <p onClick={() => setShowName(false)}>{discription}</p>
+          <div key={id} className="activeText">
+            <h1 onClick={() => setShowName(!showName)}>{name}</h1>
+            <p onClick={() => setShowName(!showName)}>{discription}</p>
           </div>
         )}
     </div>
