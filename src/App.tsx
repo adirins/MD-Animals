@@ -10,24 +10,16 @@ function App() {
   const [allAnimals] = useState([...animals])
   const [filteredAnimals, setfilteredAnimals] = useState([...allAnimals])
 
-
-
-
-
   const clickHandler = (value: any) => {
     const newFilteredAnimals = [...filteredAnimals];
     const newAllAnimals = [...allAnimals];
-    
     let currentSpecies = newFilteredAnimals.map(item => item.species)
-    
     if (currentSpecies.indexOf(value) < 0) {
-      currentSpecies = [...currentSpecies,...[value]]
-    }else{
+      currentSpecies = [...currentSpecies, ...[value]]
+    } else {
       currentSpecies = currentSpecies.filter(item => item !== value).map(item => item)
-    }   
-
+    }
     let onlyCheckedAnimals = newAllAnimals.filter(item => (currentSpecies).includes(item.species));
-
     setfilteredAnimals(onlyCheckedAnimals)
   };
 
@@ -49,7 +41,6 @@ function App() {
             </div>
           );
         })}
-
       </div>
       <div className="row center-xs margin--top--25">
         {filteredAnimals.length === 0 ? (
