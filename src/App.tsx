@@ -1,55 +1,46 @@
 import React, { useState } from "react";
 import "flexboxgrid";
-import { AnimalCarousel } from "./components/AnimalCarousel/AnimalCarousel";
 import "./App.css";
-import { animals } from "./animalData";
-import { Checkbox } from "./components/Checkbox/Checkbox";
+import { Button } from "./components/Button";
+import { CheckedButton } from "./components/CkeckedButton";
+
+const currency: string[] = ["eur", "pln", "gel", "dkk", "czk", "gpb", "sek", "usd", "rub"]
 
 function App() {
+  const [checkedCurrency, setCheckedCurrency] = useState<string[]>([])
 
-  const [allAnimals] = useState([...animals])
-  const [filteredAnimals, setfilteredAnimals] = useState([...allAnimals])
-
-  const clickHandler = (value: any) => {
-    const newFilteredAnimals = [...filteredAnimals];
-    const newAllAnimals = [...allAnimals];
-    let currentSpecies = newFilteredAnimals.map(item => item.species)
-    if (currentSpecies.indexOf(value) < 0) {
-      currentSpecies = [...currentSpecies, ...[value]]
-    } else {
-      currentSpecies = currentSpecies.filter(item => item !== value).map(item => item)
-    }
-    let onlyCheckedAnimals = newAllAnimals.filter(item => (currentSpecies).includes(item.species));
-    setfilteredAnimals(onlyCheckedAnimals)
-  };
-
+  const clickHandler = (value: string) => {
+    let newCheckedCurrency: string[] = [...checkedCurrency];
+    newCheckedCurrency.indexOf(value) < 0 ?
+      newCheckedCurrency = [...newCheckedCurrency, ...[value]]
+      :
+      newCheckedCurrency = newCheckedCurrency.filter(item => item !== value).map(item => item)
+    setCheckedCurrency(newCheckedCurrency);
+  }
+  
   return (
     <div className="container container-fluid">
-      <div className="row center-xs">
-        <div className="col-xs-12">
-          <h1>Izvēlies dzīvnieku!</h1>
-        </div>
-      </div>
-      <div className="row center-xs">
-        {allAnimals.map((item, i) => {
-          return (
-            <div key={i}>
-              <Checkbox
-                species={item.species}
-                onFilterClick={() => clickHandler(item.species)}
-              />
+      <div className="row center-xs middle-xs row--full-height">
+        <div className="col-xs-6 ">
+          <div className="wrapper">
+            <div className="checkbox--wrapper ">
+              {checkedCurrency.length >= 0 &&
+                checkedCurrency.map((item, i) => {
+                  return (
+                    <CheckedButton key={i} item={item} onClick={() => clickHandler(item)} />
+                  )
+                })
+              }
             </div>
-          );
-        })}
-      </div>
-      <div className="row center-xs margin--top--25">
-        {filteredAnimals.length === 0 ? (
-          <div>
-            <b>Nav izvēlēts neviens dzīvnieks!</b>
+            <div className="checkbox--wrapper ">
+              {currency.map((item, i) => {
+                return (
+                  <Button key={i} item={item} onClick={() => clickHandler(item)} />
+                )
+              })}
+            </div>
           </div>
-        ) : (
-            <AnimalCarousel imageData={filteredAnimals} />
-          )}
+        </div>
       </div>
     </div>
   );
